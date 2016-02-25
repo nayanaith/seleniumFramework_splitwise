@@ -1,4 +1,4 @@
-package com.pages;
+package com.splitwise.pages;
 
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.FindBy;
@@ -7,16 +7,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class HomePage implements PageConstants{
+import com.splitwise.pageconstants.HomePageConstants;
+
+public class HomePage implements HomePageConstants{
 	WebDriver driver;
 	
 	@FindBy(xpath=titleXpath)
 	WebElement swTitle;
 	
-	@FindBy(xpath=".//body/div[2]/div[2]/a[1]") 
+	@FindBy(xpath=signUpBtnXpath) 
 	WebElement signupButton;
 	
-	@FindBy(xpath=".//body/div[1]/div/div[1]/a[@class='btn btn-mint']") 
+	@FindBy(xpath=loginBtnXpath) 
 	WebElement loginButton;
 	
 

@@ -1,5 +1,7 @@
 package com.pages.test;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -7,28 +9,30 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.rules.TestWatcher;
-import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import com.pages.HomePage;
-import com.userDetails.dao.UserDetailsDAO;
+import com.splitwise.pages.HomePage;
 
-import junit.framework.Assert;
+
 
 
 /**
  * Unit test for simple App.
  */
-public class TestHomePage 
+public class HomePageTest 
 {
 	WebDriver driver;
 	HomePage hmpage;
 	//UserDetailsDAO userDetails;
+	
+	@Rule public TestName name = new TestName();
 	
 	@Before
 	public void setup(){
@@ -43,13 +47,13 @@ public class TestHomePage
 		try{
 		hmpage = new HomePage(driver);		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		Assert.assertEquals("Split expenses with friends.", hmpage.getTitleText());
-		Assert.assertEquals("Get started now(it's free!)", hmpage.getSignupButtonText().replaceAll("\n",""));
+		assertEquals("Split expenses with friends.", hmpage.getTitleText());
+		assertEquals("Get started now(it's free!)", hmpage.getSignupButtonText().replaceAll("\n",""));
 
 		}
 		
 		catch(Exception e){ 
-			Assert.fail(); //To fail test in case of any element identification failure		
+			//fail(); //To fail test in case of any element identification failure		
 			File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 			FileUtils.copyFile(scrFile, new File("D:\\testScreenShot.jpg"));
 		} 	
@@ -58,7 +62,9 @@ public class TestHomePage
 	}//end testHomePage
 	
 	@After
-	public void closes(){
+	public void closes() throws Exception{		
+		File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(scrFile, new File("D:\\screenShots\\"+name.getMethodName()+".jpg"));
 		driver.close();
 	}//end closeAll
 	
